@@ -1,7 +1,7 @@
 CFLAGS = -c -fPIC -Wall
 INC = include
 OBJECTS = mixer.o pcm.o
-LIB = libtinyalsa.so
+LIB = libtinyalsa.a
 CROSS_COMPILE =
 CC=gcc
 
@@ -20,7 +20,7 @@ tinypcminfo: $(LIB) tinypcminfo.o
 	$(CROSS_COMPILE)$(CC) tinypcminfo.o -L. -ltinyalsa -o tinypcminfo
 
 $(LIB): $(OBJECTS)
-	$(CROSS_COMPILE)gcc -shared $(OBJECTS) -o $(LIB)
+	$(CROSS_COMPILE)ar -rc $(LIB) $(OBJECTS)
 
 .c.o:
 	$(CROSS_COMPILE)$(CC) $(CFLAGS) $< -I$(INC)
